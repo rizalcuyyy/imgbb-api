@@ -1,0 +1,15 @@
+name: Deploy Worker
+on:
+  push:
+    branches: [ main ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Wrangler
+        run: npm install -g wrangler
+      - name: Publish Worker
+        env:
+          IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+        run: wrangler publish
