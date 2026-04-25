@@ -1,4 +1,4 @@
-name = "imgbb-gallery-worker"
+name = "imgbb-api"
 main = "worker.js"          # file Worker utama
 compatibility_date = "2026-04-25"
 type = "javascript"
