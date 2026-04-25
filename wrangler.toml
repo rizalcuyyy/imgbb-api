@@ -1,0 +1,16 @@
+name = "imgbb-gallery-worker"
+main = "worker.js"          # file Worker utama
+compatibility_date = "2026-04-25"
+type = "javascript"
+
+# KV Namespace binding
+[[kv_namespaces]]
+binding = "IMAGE_KV"       # nama di Worker
+id = "dbf1cf8e078741ee8dd6a5b8cf2f4ed0"                    # isi nanti setelah KV dibuat, atau kosong kalau pake Wrangler secret
+
+# Environment untuk GitHub Actions / local
+[vars]
+IMGBB_API_KEY = "${IMGBB_API_KEY}"   # ambil dari env / secret GitHub
+
+# Optional: routes (jika mau deploy di domain tertentu)
+# routes = ["https://galeri.lu/*"]
