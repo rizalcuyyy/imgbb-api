@@ -12,10 +12,7 @@ async function handleRequest(request) {
     const file = formData.get("file")
     if (!file) return new Response("No file uploaded", { status: 400 })
 
-    // API key dari env GitHub
     const imgbbKey = IMGBB_API_KEY
-
-    // Upload ke imgbb
     const payload = new FormData()
     payload.append("image", file)
 
@@ -46,12 +43,10 @@ async function handleRequest(request) {
 
     event.waitUntil(updateView(imageId, data.views))
 
-    return fetch(data.url, {
-      cf: { cacheEverything: true, cacheTtl: 86400 }
-    })
+    return fetch(data.url, { cf: { cacheEverything: true, cacheTtl: 86400 } })
   }
 
-  // ===== Gallery list endpoint =====
+  // ===== Galeri list =====
   if (path === "/gallery") {
     let images = []
     const list = await IMAGE_KV.list()
@@ -60,7 +55,6 @@ async function handleRequest(request) {
       if (meta) images.push(meta)
     }
 
-    // Sort: views + created_at weighted
     images.sort((a,b) => (b.views*2 + b.created_at) - (a.views*2 + a.created_at))
     return new Response(JSON.stringify(images), { headers: { "Content-Type": "application/json" } })
   }
@@ -68,7 +62,6 @@ async function handleRequest(request) {
   return new Response("Not Found", { status: 404 })
 }
 
-// ===== Helper =====
 async function updateView(id, currentViews) {
   try {
     const data = await IMAGE_KV.get(id, { type: "json" })
